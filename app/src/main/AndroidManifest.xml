@@ -9,23 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
         <activity android:name=".activities.UserActivity" />
-
         <activity
             android:name=".activities.NewNoteActivity"
             android:label="Criar nota"
             android:parentActivityName=".activities.ListNotesActivity" />
-
         <activity
             android:name=".activities.ListNotesActivity"
             android:label="Todas as notas">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
