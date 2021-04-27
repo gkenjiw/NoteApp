@@ -3,9 +3,12 @@ package br.senac.noteapp.activities
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.room.Room
 import br.senac.noteapp.databinding.ActivityNewNoteBinding
+import br.senac.noteapp.db.AppDatabase
 import br.senac.noteapp.model.Note
 import br.senac.noteapp.model.Notes
+import kotlin.concurrent.thread
 
 class NewNoteActivity : AppCompatActivity() {
     lateinit var binding: ActivityNewNoteBinding
@@ -19,12 +22,22 @@ class NewNoteActivity : AppCompatActivity() {
             val sharedPrefs = getSharedPreferences("Users", Context.MODE_PRIVATE)
             val username = sharedPrefs.getString("username","default") as String
 
-            val note = Note(binding.etTitle.text.toString(), binding.etDesc.text.toString(), username)
+            val note = Note(title = binding.etTitle.text.toString(), desc = binding.etDesc.text.toString(), user = username)
 
-            Notes.noteList.add(note)
+            //Notes.noteList.add(note)
+            Thread {
+                saveNote(note)
+                finish()
+            }.start()
 
-            finish()
+            //finish()
         }
+    }
+
+    fun saveNote(note : Note) {
+        val db = Room.databaseBuilder(this, AppDatabase::class.java, "db").build()
+
+        db.noteDao().save(note)
     }
 
 }

@@ -6,11 +6,14 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
+import androidx.room.Room
 import br.senac.noteapp.R
 import br.senac.noteapp.databinding.ActivityListNotesBinding
 import br.senac.noteapp.databinding.NoteCardBinding
+import br.senac.noteapp.db.AppDatabase
 import br.senac.noteapp.model.Note
 import br.senac.noteapp.model.Notes
+import java.math.RoundingMode
 
 class ListNotesActivity : AppCompatActivity() {
     lateinit var binding: ActivityListNotesBinding
@@ -26,13 +29,14 @@ class ListNotesActivity : AppCompatActivity() {
         }
     }
 
-    fun refreshNotes() {
+    fun updateUI(notes : List<Note>) {
         binding.noteContainer.removeAllViews()
 
         val prefManager = PreferenceManager.getDefaultSharedPreferences(this)
         val color = prefManager.getInt("noteColor", R.color.noteDefaultColor)
 
-        Notes.noteList.forEach {
+        //Notes.noteList.forEach {
+        notes.forEach {
             val cardBinding = NoteCardBinding.inflate(layoutInflater)
 
             cardBinding.txtTitle.text = it.title
@@ -43,6 +47,18 @@ class ListNotesActivity : AppCompatActivity() {
 
             binding.noteContainer.addView(cardBinding.root)
         }
+    }
+
+    fun refreshNotes() {
+        val db = Room.databaseBuilder(this, AppDatabase::class.java, "db").build()
+        Thread {
+            val notes = db.noteDao().getAll()
+
+            runOnUiThread {
+                updateUI(notes)
+            }
+            
+        }.start()
     }
 
     override fun onResume() {
