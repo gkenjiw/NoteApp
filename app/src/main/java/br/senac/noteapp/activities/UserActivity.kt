@@ -22,8 +22,7 @@ class UserActivity : AppCompatActivity() {
             val editor = sharedPrefs.edit()
             editor.putString("username", binding.etUsername.text.toString())
 
-            editor.commit() //uma vez commitado ja era, fechou o arquivo, se tentar mudar
-                            //toma dois tapão em forma de exception
+            editor.commit() //assim que for commitado, não tem rollback
         }
     }
 
