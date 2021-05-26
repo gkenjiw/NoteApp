@@ -1,3 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Aplicativo de Notas</string>
+    <string name="title_activity_settings">Configurações</string>
+    <string name="note_color">Cor da nota</string>
+    <string name="pick_color">Selecione uma cor</string>
+    <string name="note_title">Título da nota</string>
+    <string name="note_desc">Descrição da nota</string>
+    <string name="insert">Inserir</string>
+    <string name="note">Nota</string>
+    <string name="note_text_color">Cor do texto</string>
+    <string name="note_title_text_size">Tamanho do texto do título</string>
+    <string name="note_body_text_size">Tamanho do texto do conteúdo</string>
 </resources>

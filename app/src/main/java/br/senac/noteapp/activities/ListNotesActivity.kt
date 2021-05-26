@@ -34,16 +34,46 @@ class ListNotesActivity : AppCompatActivity() {
 
         val prefManager = PreferenceManager.getDefaultSharedPreferences(this)
         val color = prefManager.getInt("noteColor", R.color.noteDefaultColor)
+        val textColor = prefManager.getInt("noteTextColor", R.color.noteTextDefaultColor)
+        var titleTextSize = prefManager.getString("noteTitleTextSize", "24")!!.toFloatOrNull()
+        if (titleTextSize == null) titleTextSize = 24f
+        var bodyTextSize = prefManager.getString("noteBodyTextSize", "14")!!.toFloatOrNull()
+        if (bodyTextSize == null) bodyTextSize = 14f
 
         //Notes.noteList.forEach {
         notes.forEach {
             val cardBinding = NoteCardBinding.inflate(layoutInflater)
+            val note = it
 
-            cardBinding.txtTitle.text = it.title
-            cardBinding.txtDesc.text = it.desc
-            cardBinding.txtUser.text = it.user
+            cardBinding.txtTitle.text = note.title
+            cardBinding.txtDesc.text = note.desc
+            cardBinding.txtUser.text = note.user
 
             cardBinding.root.setCardBackgroundColor(color)
+
+            cardBinding.txtTitle.textSize = titleTextSize
+            cardBinding.txtDesc.textSize = bodyTextSize
+
+            cardBinding.txtTitle.setTextColor(textColor)
+            cardBinding.txtDesc.setTextColor(textColor)
+
+            cardBinding.btnEdit.setOnClickListener {
+                val i = Intent(this, NewNoteActivity::class.java)
+                i.putExtra("isEdit", true)
+                i.putExtra("id", note.id)
+                i.putExtra("title", note.title)
+                i.putExtra("desc", note.desc)
+
+                startActivity(i)
+            }
+
+            cardBinding.btnDelete.setOnClickListener {
+                val noteToDel = Note(id = note.id, title = note.title, desc = note.desc, user = note.user)
+                Thread {
+                    deleteNote(noteToDel)
+                    refreshNotes()
+                }.start()
+            }
 
             binding.noteContainer.addView(cardBinding.root)
         }
@@ -59,6 +89,12 @@ class ListNotesActivity : AppCompatActivity() {
             }
             
         }.start()
+    }
+
+    fun deleteNote(note : Note) {
+        val db = Room.databaseBuilder(this, AppDatabase::class.java, "db").build()
+
+        db.noteDao().delete(note)
     }
 
     override fun onResume() {

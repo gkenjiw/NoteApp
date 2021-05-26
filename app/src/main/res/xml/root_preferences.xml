@@ -1,12 +1,39 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="Geral">
+    <PreferenceCategory app:title="@string/note">
         <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:defaultValue="@color/noteDefaultColor"
             android:key="noteColor"
-            android:summary="Pick a color"
-            android:title="Note color">
+            android:summary="@string/pick_color"
+            android:title="@string/note_color"
+            app:defaultValue="true">
+
+        </com.jaredrummler.android.colorpicker.ColorPreferenceCompat>
+        <EditTextPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="24"
+            android:key="noteTitleTextSize"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/note_title_text_size"
+            android:inputType="number"/>
+        <EditTextPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="14"
+            android:key="noteBodyTextSize"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/note_body_text_size"
+            android:inputType="number"/>
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:key="noteTextColor"
+            android:summary="@string/pick_color"
+            android:title="@string/note_text_color"
+            app:defaultValue="true">
 
         </com.jaredrummler.android.colorpicker.ColorPreferenceCompat>
     </PreferenceCategory>

@@ -5,11 +5,11 @@
     <item
         android:id="@+id/user"
         android:icon="@drawable/user"
-        android:title="Item"
+        android:title="@string/item"
         app:showAsAction="always" />
     <item
         android:id="@+id/config"
         android:icon="@drawable/settings"
-        android:title="Item"
+        android:title="@string/config"
         app:showAsAction="always" />
 </menu>

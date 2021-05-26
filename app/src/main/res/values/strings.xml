@@ -1,19 +1,21 @@
 <resources>
     <string name="app_name">NoteApp</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_settings">Settings</string>
 
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
+    <!-- Menu items -->
+    <string name="item" translatable="false">Item</string>
+    <string name="config" translatable="false">Config</string>
 
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
+    <!-- Root preferences -->
+    <string name="note">Note</string>
+    <string name="note_color">Note color</string>
+    <string name="note_title_text_size">Title text size</string>
+    <string name="note_body_text_size">Body text size</string>
+    <string name="note_text_color">Text color</string>
+    <string name="pick_color">Pick a color</string>
 
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <!-- New note -->
+    <string name="note_title">Note title</string>
+    <string name="note_desc">Note description</string>
+    <string name="insert">Insert</string>
 </resources>

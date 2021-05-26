@@ -23,6 +23,7 @@ class UserActivity : AppCompatActivity() {
             editor.putString("username", binding.etUsername.text.toString())
 
             editor.commit() //assim que for commitado, não tem rollback
+            finish()
         }
     }
 

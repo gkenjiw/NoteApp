@@ -18,26 +18,52 @@ class NewNoteActivity : AppCompatActivity() {
         binding = ActivityNewNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnAdd.setOnClickListener {
-            val sharedPrefs = getSharedPreferences("Users", Context.MODE_PRIVATE)
-            val username = sharedPrefs.getString("username","default") as String
+        val sharedPrefs = getSharedPreferences("Users", Context.MODE_PRIVATE)
+        val username = sharedPrefs.getString("username","default") as String
 
-            val note = Note(title = binding.etTitle.text.toString(), desc = binding.etDesc.text.toString(), user = username)
+        if (intent.getBooleanExtra("isEdit", false)) {
+            var titleEdit = intent.getStringExtra("title")
+            var descEdit = intent.getStringExtra("desc")
+            var id = intent.getIntExtra("id", 0)
 
-            //Notes.noteList.add(note)
-            Thread {
-                saveNote(note)
-                finish()
-            }.start()
+            binding.etTitle.setText(titleEdit)
+            binding.etDesc.setText(descEdit)
 
-            //finish()
+            binding.btnAdd.setOnClickListener {
+                val note = Note(id = id, title = binding.etTitle.text.toString(), desc = binding.etDesc.text.toString(), user = username)
+
+                Thread {
+                    updateNote(note)
+                    finish()
+                }.start()
+            }
+
+        } else {
+            binding.btnAdd.setOnClickListener {
+                val note = Note(title = binding.etTitle.text.toString(), desc = binding.etDesc.text.toString(), user = username)
+
+                //Notes.noteList.add(note)
+                Thread {
+                    saveNote(note)
+                    finish()
+                }.start()
+
+                //finish()
+            }
         }
+
     }
 
     fun saveNote(note : Note) {
         val db = Room.databaseBuilder(this, AppDatabase::class.java, "db").build()
 
         db.noteDao().save(note)
+    }
+
+    fun updateNote(note : Note) {
+        val db = Room.databaseBuilder(this, AppDatabase::class.java, "db").build()
+
+        db.noteDao().update(note)
     }
 
 }
